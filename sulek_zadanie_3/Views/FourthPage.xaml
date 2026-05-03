@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:sulek_zadanie_3.Models"
+             xmlns:vm="clr-namespace:sulek_zadanie_3.ViewModels"
+             x:Class="sulek_zadanie_3.Views.FourthPage"
+             x:DataType="vm:FourthPageViewModel"
+             Title="Statistics">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Padding="20" RowSpacing="15">
+
+        <Label
+            Grid.Row="0"
+            Text="Statistics"
+            FontSize="28"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" />
+
+        <VerticalStackLayout Grid.Row="1" Spacing="2">
+            <Label
+                Text="Expenses by category"
+                FontSize="16"
+                FontAttributes="Bold" />
+            <Label
+                Text="{Binding TotalExpenses, StringFormat='Total: {0:N2} €'}"
+                FontSize="13"
+                TextColor="Gray" />
+        </VerticalStackLayout>
+
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding ExpensesByCategory}">
+
+            <CollectionView.EmptyView>
+                <Label
+                    Text="No expenses recorded yet."
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:CategoryTotal">
+                    <Border
+                        StrokeThickness="1"
+                        Padding="12"
+                        Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding Category}"
+                                FontSize="15"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Total, StringFormat='{0:N2} €'}"
+                                FontSize="15"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border
+            Grid.Row="3"
+            StrokeThickness="1"
+            Padding="12">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Label
+                    Grid.Column="0"
+                    Text="Total income"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding TotalIncome, StringFormat='{0:N2} €'}"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <VerticalStackLayout Grid.Row="4" Spacing="10">
+            <Button
+                Text="Home screen"
+                Command="{Binding GoToMainCommand}" />
+            <Button
+                Text="Transaction List"
+                Command="{Binding GoToSecondCommand}" />
+            <Button
+                Text="Add transaction"
+                Command="{Binding GoToThirdCommand}" />
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

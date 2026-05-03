@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:sulek_zadanie_3.Models"
+             xmlns:vm="clr-namespace:sulek_zadanie_3.ViewModels"
+             x:Class="sulek_zadanie_3.Views.SecondPage"
+             x:DataType="vm:SecondPageViewModel"
+             Title="Transaction List">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="15">
+
+        <Label
+            Grid.Row="0"
+            Text="Transaction List"
+            FontSize="28"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" />
+
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Transactions}">
+
+            <CollectionView.EmptyView>
+                <Label
+                    Text="No transactions yet."
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Transaction">
+                    <Border
+                        StrokeThickness="1"
+                        Padding="12"
+                        Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10">
+
+                            <Label
+                                Grid.Row="0" Grid.Column="0"
+                                Text="{Binding Category}"
+                                FontSize="16"
+                                FontAttributes="Bold" />
+
+                            <Label
+                                Grid.Row="0" Grid.Column="1"
+                                Text="{Binding Amount, StringFormat='{0:N2} €'}"
+                                FontSize="16"
+                                FontAttributes="Bold" />
+
+                            <Button
+                                Grid.Row="0" Grid.Column="2"
+                                Grid.RowSpan="3"
+                                Text="✕"
+                                FontSize="14"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Padding="0"
+                                VerticalOptions="Center"
+                                BackgroundColor="Transparent"
+                                TextColor="Red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                CommandParameter="{Binding .}" />
+
+                            <Label
+                                Grid.Row="1" Grid.Column="0"
+                                Text="{Binding Type}"
+                                FontSize="13" />
+
+                            <Label
+                                Grid.Row="1" Grid.Column="1"
+                                Text="{Binding Date, StringFormat='{0:d}'}"
+                                FontSize="13" />
+
+                            <Label
+                                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                Text="{Binding Note}"
+                                FontSize="12"
+                                TextColor="Gray" />
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
+            <Button
+                Text="Add transaction"
+                Command="{Binding GoToThirdCommand}" />
+            <Button
+                Text="Statistics"
+                Command="{Binding GoToFourthCommand}" />
+            <Button
+                Text="Home screen"
+                Command="{Binding GoBackCommand}" />
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>
